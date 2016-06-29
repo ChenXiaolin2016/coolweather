@@ -17,7 +17,7 @@ public class CoolWeatherDB {
 	/**
 	 * SQLiteDatabase name
 	 */
-	public static final String DB_NAME = "cool_weather";
+	public static final String DB_NAME = "cool_weather.db";
 
 	/**
 	 * SQLiteDatabase version
