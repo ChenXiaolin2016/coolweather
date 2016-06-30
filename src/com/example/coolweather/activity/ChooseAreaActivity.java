@@ -68,13 +68,20 @@ public class ChooseAreaActivity extends Activity {
 	 */
 	private Province selectedProvince;
 	private City selectedCity;
+	
+	/**
+	 * 判断是否是从WeatherActivity跳转过来
+	 */
+	private boolean isFromWeatherActivity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		if(prefs.getBoolean("city_selected", false)){
+		isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false); 
+		if(prefs.getBoolean("city_selected", false) && !isFromWeatherActivity){
 			Intent intent = new Intent(this, WeatherActivity.class);
 			startActivity(intent);
 			finish();
@@ -240,7 +247,7 @@ public class ChooseAreaActivity extends Activity {
 	private void showProgressDialog() {
 		if (progressDialog == null) {
 			progressDialog = new ProgressDialog(this);
-			progressDialog.setMessage("正在加载。。。");
+			progressDialog.setMessage("正在加载...");
 			progressDialog.setCanceledOnTouchOutside(false);
 		}
 		progressDialog.show();
@@ -264,6 +271,10 @@ public class ChooseAreaActivity extends Activity {
 		} else if (currentLevel == LEVEL_CITY) {
 			queryProvinces();
 		} else {
+			if(isFromWeatherActivity){
+				Intent intent = new Intent(this, WeatherActivity.class);
+				startActivity(intent);
+			}
 			finish();
 		}
 	}
